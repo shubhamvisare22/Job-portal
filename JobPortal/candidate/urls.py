@@ -1,19 +1,10 @@
-from rest_framework.routers import DefaultRouter
-from django.urls import path, include
+from django.urls import path
 from .views import CandidateProfileViewset, ResumeViewset, EducationViewset, ExperienceViewset, SkillViewset, ApplicationViewset
-
-router = DefaultRouter()
-router.register(r'candidate', CandidateProfileViewset, basename='candidate')
-router.register(r'resume', ResumeViewset, basename='resume'),
-router.register(r'education', EducationViewset, basename='education'),
-router.register(r'experience', ExperienceViewset, basename='experience'),
-router.register(r'skill', SkillViewset, basename='skill'),
-router.register(r'application', ApplicationViewset, basename='application'),
 
 
 urlpatterns = [
+
     # -------------------------------- Candidate ------------------------------------
-    path('', include(router.urls)),
     path('candidate-list/', CandidateProfileViewset.as_view({'get': 'list'}), name='candidate-list'),
     path('candidate-create/', CandidateProfileViewset.as_view({'post': 'create'}), name='candidate-create'),
     path('candidate-retrieve/<int:pk>/', CandidateProfileViewset.as_view({'get': 'retrieve'}), name='candidate-retrieve'),

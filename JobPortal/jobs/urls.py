@@ -1,15 +1,9 @@
-from rest_framework.routers import DefaultRouter
-from django.urls import path, include
+from django.urls import path
 from .views import JobListingViewSet, CategoryViewSet, TagViewSet, CompanyViewSet
 
-router = DefaultRouter()
-router.register(r'job', JobListingViewSet, basename='job')
-router.register(r'category', CategoryViewSet, basename='category')
-router.register(r'tag', TagViewSet, basename='tag')
-router.register(r'company', CompanyViewSet, basename='company')
 
 urlpatterns = [
-    path('', include(router.urls)),
+
     
     # ---------------------------------- Jobs ---------------------------------------
     path('job-list/', JobListingViewSet.as_view({'get': 'list'}), name='job-list'),

@@ -8,6 +8,7 @@ class CandidateProfile(models.Model):
     """
     Stores detailed information about the candidate.
     """
+    cand_id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='candidate_profile', limit_choices_to={'role': 'candidate'})
     cand_full_name = models.CharField(max_length=255)
     cand_phone_number = models.CharField(max_length=15, blank=True, null=True)
@@ -33,6 +34,7 @@ class Application(models.Model):
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
     ]
+    application_id = models.AutoField(primary_key=True)
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, related_name='applications')
     job_listing = models.ForeignKey(JobListing, on_delete=models.CASCADE, related_name='applications')
     resume = models.ForeignKey('Resume', on_delete=models.SET_NULL, null=True, blank=True, related_name='applications')
@@ -51,6 +53,7 @@ class Resume(models.Model):
     """
     Stores resumes or CVs uploaded by the candidate.
     """
+    resume_id = models.AutoField(primary_key=True)
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, related_name='resumes')
     resume_file = models.FileField(upload_to='resumes/')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -63,6 +66,7 @@ class Education(models.Model):
     """
     Tracks educational background.
     """
+    education_id = models.AutoField(primary_key=True)
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, related_name='educations')
     institution_name = models.CharField(max_length=255)
     degree = models.CharField(max_length=255)
@@ -79,6 +83,7 @@ class Experience(models.Model):
     """
     Tracks professional experience.
     """
+    experience_id = models.AutoField(primary_key=True)
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, related_name='experiences')
     job_title = models.CharField(max_length=255)
     company_name = models.CharField(max_length=255)
@@ -102,6 +107,7 @@ class Skill(models.Model):
         ('advanced', 'Advanced'),
         ('expert', 'Expert'),
     ]
+    skill_id = models.AutoField(primary_key=True)
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, related_name='skills')
     name = models.CharField(max_length=100)
     proficiency = models.CharField(max_length=50, choices=SKILL_PROFICIENCY_CHOICES, default='beginner')

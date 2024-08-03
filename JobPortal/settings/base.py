@@ -33,6 +33,7 @@ INTERNAL_APPS = [
 EXTERNAL_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'drf_spectacular'
 ]
 
 INSTALLED_APPS.extend(INTERNAL_APPS)
@@ -115,6 +116,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
 }
 
 SIMPLE_JWT = {
@@ -125,4 +127,13 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'HireYou',
+    # 'DESCRIPTION': 'Detailed description of your project.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # other settings...
 }

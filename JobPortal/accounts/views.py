@@ -5,11 +5,13 @@ from .serializers import CustomUserSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from drf_spectacular.utils import extend_schema
 
 User = get_user_model()
 
 
 class UserRegistrationAPIView(APIView):
+    @extend_schema(tags=['Accounts'])
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
@@ -24,6 +26,7 @@ class UserRegistrationAPIView(APIView):
 
 
 class UserLoginAPIView(APIView):
+    @extend_schema(tags=['Accounts'])
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
@@ -39,6 +42,7 @@ class UserLoginAPIView(APIView):
 
 
 class TokenRefreshView(APIView):
+    @extend_schema(tags=['Accounts'])
     def post(self, request, *args, **kwargs):
         refresh_token = request.data.get('refresh')
         if refresh_token:
@@ -52,5 +56,6 @@ class TokenRefreshView(APIView):
             return Response({'error': 'Refresh token not provided'}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLogoutAPIView(APIView):
+    @extend_schema(tags=['Accounts'])
     def post(self, request):
         return Response({"detail": "User logged out"}, status=status.HTTP_204_NO_CONTENT)
